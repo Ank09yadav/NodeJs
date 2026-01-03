@@ -10,3 +10,34 @@ import os from 'node:os';
 // console.log("User Info : ", os.userInfo()); 
 // console.log("Machine : ", os.machine()); 
 
+function monitor (){
+    //take a snapshot
+    //take another snapshot after a second
+
+    const oldCpu = os.cpus()
+    setTimeout(()=>{
+       const newCpus = os.cpus();
+        const usage = newCpus.map((cpu,i)=>{
+            return{
+                core: i,
+                usage: calculateCpu(oldCpu[i],newCpus[i])+'%',
+
+            }
+            
+        })
+        console.clear();
+       console.table(usage);
+
+    },1000)
+    
+}
+function calculateCpu(oldCpu, newCpus){
+    const oldTotal = Object.values(oldCpu.times).reduce((a,b)=>a+b);
+    const newTotal = Object.values(newCpus.times).reduce((a,b)=>a+b);
+    const idle = newCpus.times.idle - oldCpu.times.idle
+    const total = newTotal - oldTotal;
+    const used = total - idle;
+    return ((100*used)/total).toFixed(1);
+
+}
+setInterval(monitor,1000)
