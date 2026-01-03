@@ -1,4 +1,5 @@
 import os from "node:os";
+import chalk from "chalk";
 
 //console.log("CPU",os.cpus());
 // console.log("CPU",os.cpus().length);
@@ -24,6 +25,7 @@ function monitor() {
       };
     });
     console.clear();
+    console.log(chalk.bgGray(`====System Stats ====`));
     console.table(usage);
     const usedMemory = (os.totalmem() - os.freemem()) / (1024 * 1024 * 1024);
     console.log(
@@ -32,6 +34,7 @@ function monitor() {
         (1024 * 1024 * 1024)
       ).toFixed(2)} GB`
     );
+    console.log('Memory Useges: ', usedMemory > 6 ? chalk.red('High') : chalk.green('Normal'));
   }, 1000);
 }
 function calculateCpu(oldCpu, newCpus) {
