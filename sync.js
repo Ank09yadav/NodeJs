@@ -1,4 +1,7 @@
 import * as fs from 'node:fs/promises'
+import path from 'node:path';
+
+
 // import * as fs from 'node:fs'
 // async function createFile(pathname){
 //     await fs.writeFile(pathname,"hello Ank \n")
@@ -19,7 +22,7 @@ import * as fs from 'node:fs/promises'
 //     });
 //     console.log('file operation done')
 //     }
- createFile('./hello.txt');
+//  createFile('./hello.txt');
 
  export async function createFolder(folderpath){
     await fs.mkdir(folderpath, {recursive:true});
@@ -29,4 +32,20 @@ import * as fs from 'node:fs/promises'
  }
  export async function writeToFile(pathname, content=''){
     await fs.appendFile(pathname,content);
+ }
+ export async function deleteFile(pathname){
+   await fs.unlink(pathname);
+ }
+ export async function deleteFolder(folderPath){
+   await fs.rmdir(folderPath, {recursive:true});
+ }
+ export async function listItems(folerPath){
+   const items = await fs.readdir(folerPath,{withFileTypes:true})
+   //console.log(items);
+   return items.map((item)=>({
+         name: item.name,
+         type: item.isDirectory()?"Folder":"File",
+         path: path.join(import.meta.url, item.name)
+
+   }) );
  }
