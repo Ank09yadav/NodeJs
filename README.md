@@ -23,7 +23,7 @@ If you are looking for **nodejs** projects or searching for **ank09yadav github*
 
 ---
 
-## 🚀 Project Overview
+##  Project Overview
 
 This repository contains a suite of Node.js tools designed to demonstrate modern backend development practices using **ES Modules**.
 
